@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
-""" LIFO caching
+""" MRU caching
 """
 
 
 BaseCaching = __import__('base_caching').BaseCaching
 
 
-class LIFOCache(BaseCaching):
-    """ LIFOCache
+class MRUCache(BaseCaching):
+    """ MRUCache
     """
     def __init__(self):
         super().__init__()
@@ -32,4 +32,7 @@ class LIFOCache(BaseCaching):
         """
         if key is None or not (key in self.cache_data):
             return None
-        return self.cache_data[key]
+        else:
+            del self.history[self.history.index(key)]
+            self.history.append(key)
+            return self.cache_data[key]
